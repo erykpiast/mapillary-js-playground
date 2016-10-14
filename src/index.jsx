@@ -1,6 +1,13 @@
 import React from 'react';
-import Counter from 'modules/counter';
+
+import Preview from 'modules/preview';
+import Thumbnails from 'modules/thumbnails';
 
 export default function App() {
-  return <Counter />;
+  return (
+    <div className="page-wrapper">
+      <Thumbnails />
+      <Preview />
+    </div>
+  );
 }

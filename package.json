@@ -33,6 +33,7 @@
     "pre": "npm run publish && npm version pre && npm run postrelease"
   },
   "dependencies": {
+    "immutable": "^3.8.1",
     "ramda": "^0.22.1",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

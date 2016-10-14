@@ -3,9 +3,11 @@ import React, { PropTypes } from 'react';
 import { connect } from 'rx_state';
 
 import { addLifecycleHooks, selectState } from 'utils';
+
+import './styles.scss';
 import { inc$, dec$ } from './actions';
 
-function Counter({ dec, inc, value }) {
+function Thumbnails({ dec, inc, value }) {
   return (
     <div>
       <p>{ value }</p>
@@ -15,15 +17,15 @@ function Counter({ dec, inc, value }) {
   );
 }
 
-Counter.propTypes = {
+Thumbnails.propTypes = {
   dec: PropTypes.func.isRequired,
   inc: PropTypes.func.isRequired,
   value: PropTypes.number.isRequired,
 };
 
-export default connect(selectState(prop('counter'), {
+export default connect(selectState(prop('thumbnails'), {
   dec: dec$,
   inc: inc$,
 }))(addLifecycleHooks({
-  componentDidMount() { console.log('counter component mounted!'); }, // eslint-disable-line no-console
-}, Counter));
+  componentDidMount() { console.log('thumbnails component mounted!'); }, // eslint-disable-line no-console
+}, Thumbnails));
