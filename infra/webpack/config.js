@@ -23,6 +23,9 @@ module.exports = {
       loader: 'json',
     }],
   },
+  externals: {
+    'mapillary-js': 'Mapillary',
+  },
   output: {
     filename: '[hash].js',
     path: path.resolve('./dist'),
@@ -42,6 +45,8 @@ module.exports = {
   },
   resolve: {
     alias: {
+      components: path.join(srcDir, '/components'),
+      images: path.join(srcDir, '/images'),
       modules: path.join(srcDir, '/modules'),
       utils: path.join(srcDir, '/utils'),
     },

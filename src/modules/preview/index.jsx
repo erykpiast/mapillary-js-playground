@@ -1,31 +1,57 @@
-import { prop } from 'ramda';
 import React, { PropTypes } from 'react';
 import { connect } from 'rx_state';
 
-import { addLifecycleHooks, selectState } from 'utils';
+import MlyWrapper from 'components/mly';
+import GeoPoint from 'utils/geopoint';
 
+import { CLIENT_ID } from '../../api';
+import User from './components/user';
 import './styles.scss';
-import { inc$, dec$ } from './actions';
 
-function Preview({ dec, inc, value }) {
+function formatLocation({ lat, lon }) {
+  const g = new GeoPoint(lon, lat);
+
+  return `${g.getLonDeg()}, ${g.getLatDeg()}`;
+}
+
+
+function Preview({ photo, user }) {
+  if (!photo) {
+    return (<p>Choose valid photo from list on the right</p>);
+  }
+
   return (
     <div>
-      <p>{ value }</p>
-      <button onClick={() => inc()}>+</button>
-      <button onClick={dec}>-</button>
+      <MlyWrapper clientId={CLIENT_ID} photoKey={photo.key} />
+      <div className="photo-meta">
+        <strong className="photo-meta__label">Location:</strong>&nbsp;
+        {formatLocation(photo.location)}
+      </div>
+      { user ? <User {...user} /> : null }
     </div>
   );
 }
 
 Preview.propTypes = {
-  dec: PropTypes.func.isRequired,
-  inc: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
+  photo: PropTypes.shape({
+    key: PropTypes.string.isRequired,
+    location: PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lon: PropTypes.number.isRequired,
+    }).isRequired,
+  }),
+  user: PropTypes.object,
 };
 
-export default connect(selectState(prop('preview'), {
-  dec: dec$,
-  inc: inc$,
-}))(addLifecycleHooks({
-  componentDidMount() { console.log('preview component mounted!'); }, // eslint-disable-line no-console
-}, Preview));
+export default connect(({ currentPhotoId, photos, users }) => {
+  const photo = photos[currentPhotoId];
+  if (!photo) {
+    return {
+      photo: null,
+      user: null,
+    };
+  }
+
+  const user = users[photo.authorId];
+  return { photo, user };
+})(Preview);

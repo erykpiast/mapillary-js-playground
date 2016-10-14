@@ -1,0 +1,20 @@
+.user-info {
+  margin-top: 1em;
+}
+
+.user-info-detail {
+  &__label,
+  &__value {
+    display: inline-block;
+  }
+
+  &__label {
+    float: left;
+    font-weight: bold;
+  }
+
+  &__value {
+    font-weight: light;
+    margin-left: .25em;
+  }
+}

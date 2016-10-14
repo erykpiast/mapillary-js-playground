@@ -1,0 +1,13 @@
+.featured {
+
+  &__item {
+    position: relative;
+  }
+
+  &__author-avatar {
+    bottom: 0;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+  }
+}

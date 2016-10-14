@@ -1,8 +1,6 @@
 import { complement, identity, invoker, prop, reduce } from 'ramda';
-import { Observable } from 'rxjs';
-import { List, Map } from 'immutable';
+import { Map } from 'immutable';
 
-import { shuffle } from 'utils/fun';
 import { isNull } from 'utils/is';
 
 import router$ from './router';
@@ -80,20 +78,3 @@ export const users$ = photos$
   .distinctUntilChanged()
   .publishReplay(1)
   .refCount();
-
-
-export const featured$ = Observable.combineLatest(
-  currentPhotoId$,
-  photos$,
-  users$,
-  (currentPhotoId, photos, users) =>
-    photos
-      .toList()
-      .filter(({ id }) => id !== currentPhotoId)
-      .reduce(shuffle, new List())
-      .take(10)
-      .map(photo => ({
-        ...photo,
-        user: users.get(photo.authorId),
-      }))
-);

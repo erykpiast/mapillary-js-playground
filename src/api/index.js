@@ -1,14 +1,16 @@
 import { always, invoker, map, prop } from 'ramda';
 import querystring from 'querystring';
 
+export const CLIENT_ID = 'TXZSREplNUF4ZnRTa2FzMHEzV3ptUTo5ZmIzOWVhNTM4MGFjYjg1';
+export const DEFAULT_AVATAR = 'http://res.cloudinary.com/demo/image/facebook/w_100,h_100,c_fill,d_avatar2.png/non_existing_id.jpg';
+
 const ROOT = 'https://a.mapillary.com/v2/';
-const CLIENT_ID = 'TXZSREplNUF4ZnRTa2FzMHEzV3ptUTo5ZmIzOWVhNTM4MGFjYjg1';
-const DEFAULT_AVATAR = 'http://res.cloudinary.com/demo/image/facebook/w_100,h_100,c_fill,d_avatar2.png/non_existing_id.jpg';
 
 const createPath = (path, params = {}) => `${ROOT}${path}?${querystring.stringify({
   ...params,
   client_id: CLIENT_ID,
 })}`;
+const createThumbUrl = id => `https://d1cuyjsrcm0gby.cloudfront.net/${id}/thumb-320.jpg`;
 const json = invoker(0, 'json');
 const fetchJson = url => fetch(url).then(json);
 
@@ -23,11 +25,13 @@ export const fetchFeatured = amount => fetchJson(createPath('search/s/ul', {
 
 
 export const fetchPhotoDetails = id => fetchJson(createPath(`im/${id}`))
-  .then(({ captured_at, lat, lon, user }) => ({
+  .then(({ captured_at, key, lat, lon, user }) => ({
     id,
+    key,
     authorId: user,
     createdAt: captured_at,
     location: { lat, lon },
+    thumbnailUrl: createThumbUrl(id),
   }), always(null));
 
 export const fetchUserDetails = id => fetchJson(createPath(`u/${id}`))
