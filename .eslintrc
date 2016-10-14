@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+    "node": true
+  },
+  "rules": {
+    "react/forbid-prop-types": ["error", {"forbid": ["any"]}],
+  },
+  "settings": {
+    "import/resolver": {
+      "webpack": {
+        "config": "infra/webpack/config.js"
+      }
+    }
+  }
+}
