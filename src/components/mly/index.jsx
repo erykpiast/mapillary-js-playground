@@ -1,4 +1,4 @@
-import { Viewer } from 'mapillary-js';
+import { Viewer } from 'mapillary-js'; // eslint-disable-line import/no-extraneous-dependencies, import/no-unresolved, import/extensions
 import React, { Component, PropTypes } from 'react';
 
 import './styles.scss';
