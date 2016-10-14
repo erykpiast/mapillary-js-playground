@@ -1,6 +1,6 @@
 {
   "name": "mapillary-js-playground",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Mapillary.js experiment",
   "main": "dist/index.js",
   "author": "eryk.piast@gmail.com",
